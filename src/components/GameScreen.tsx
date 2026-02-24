@@ -38,7 +38,7 @@ export default function GameScreen({ state, onRoll, onRollComplete, onNewGame }:
           <Dice
             value={state.diceValue}
             rolling={state.rolling}
-            disabled={state.rolling}
+            disabled={state.rolling || state.diceValue !== null}
             onRoll={onRoll}
             onRollComplete={onRollComplete}
           />
