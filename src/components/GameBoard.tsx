@@ -32,12 +32,12 @@ function LadderPath({ from, to }: { from: number; to: number }) {
       <line
         x1={fx + w * px} y1={fy + w * py}
         x2={tx + w * px} y2={ty + w * py}
-        stroke="#15803d" strokeWidth="1.0" strokeLinecap="round"
+        stroke="#7e22ce" strokeWidth="1.0" strokeLinecap="round"
       />
       <line
         x1={fx - w * px} y1={fy - w * py}
         x2={tx - w * px} y2={ty - w * py}
-        stroke="#15803d" strokeWidth="1.0" strokeLinecap="round"
+        stroke="#7e22ce" strokeWidth="1.0" strokeLinecap="round"
       />
       {/* Rungs */}
       {rungTs.map((t, i) => (
@@ -45,14 +45,14 @@ function LadderPath({ from, to }: { from: number; to: number }) {
           key={i}
           x1={fx + t * dx + w * px} y1={fy + t * dy + w * py}
           x2={fx + t * dx - w * px} y2={fy + t * dy - w * py}
-          stroke="#15803d" strokeWidth="0.9" strokeLinecap="round"
+          stroke="#7e22ce" strokeWidth="0.9" strokeLinecap="round"
         />
       ))}
       {/* Small circle at bottom (start) and arrowhead at top (end) */}
-      <circle cx={fx} cy={fy} r="1.4" fill="#15803d" />
+      <circle cx={fx} cy={fy} r="1.4" fill="#7e22ce" />
       <polygon
         points={`${tx},${ty - 2.2} ${tx - 1.6},${ty + 1} ${tx + 1.6},${ty + 1}`}
-        fill="#15803d"
+        fill="#7e22ce"
         transform={`rotate(${Math.atan2(dy, dx) * (180 / Math.PI) - 90}, ${tx}, ${ty})`}
       />
     </g>
