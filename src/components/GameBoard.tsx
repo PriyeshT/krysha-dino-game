@@ -150,7 +150,7 @@ export default function GameBoard({ players, currentPlayerIndex }: {
       <div className="grid grid-cols-10 h-full">
         {BOARD.map(row =>
           row.map(square => {
-            const playersOnCell = players.filter(p => p.position === square)
+            const playersOnCell = players.filter(p => p.position === square || (square === 1 && p.position === 0))
             const isCurrentPlayerCell = currentPlayer?.position === square && currentPlayer.position > 0
             return (
               <BoardCell

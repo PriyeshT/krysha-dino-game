@@ -32,7 +32,7 @@ export default function BoardCell({ square, players, isCurrentPlayerCell }: Boar
           {players.map(p => (
             <span
               key={p.id}
-              className={`flex items-center justify-center w-5 h-5 rounded-full ${p.color} text-[11px] leading-none shadow-sm border border-white/60`}
+              className={`flex items-center justify-center w-7 h-7 rounded-full ${p.color} text-[15px] leading-none shadow-md border-2 border-white`}
               title={p.name}
             >
               {p.emoji}

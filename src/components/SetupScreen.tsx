@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PLAYER_CONFIGS, DEFAULT_NAMES } from '@/lib/constants'
+import { COIN_OPTIONS, DEFAULT_NAMES } from '@/lib/constants'
 import type { Player } from '@/lib/types'
 
 interface SetupScreenProps {
@@ -11,19 +11,21 @@ interface SetupScreenProps {
 
 export default function SetupScreen({ initialNames, onStart }: SetupScreenProps) {
   const [count, setCount] = useState(2)
-  const [names, setNames] = useState<string[]>(
-    initialNames ?? DEFAULT_NAMES
-  )
+  const [names, setNames] = useState<string[]>(initialNames ?? DEFAULT_NAMES)
+  const [coins, setCoins] = useState<string[]>(['elsa', 'snowwhite', 'moana', 'rapunzel'])
 
   function handleStart() {
-    const players: Player[] = Array.from({ length: count }, (_, i) => ({
-      id: i,
-      name: names[i].trim() || DEFAULT_NAMES[i],
-      color: PLAYER_CONFIGS[i].color,
-      textColor: PLAYER_CONFIGS[i].textColor,
-      emoji: PLAYER_CONFIGS[i].emoji,
-      position: 0,
-    }))
+    const players: Player[] = Array.from({ length: count }, (_, i) => {
+      const coin = COIN_OPTIONS.find(c => c.id === coins[i]) ?? COIN_OPTIONS[i]
+      return {
+        id: i,
+        name: names[i].trim() || DEFAULT_NAMES[i],
+        color: coin.color,
+        textColor: 'text-white',
+        emoji: coin.emoji,
+        position: 0,
+      }
+    })
     onStart(players)
   }
 
@@ -58,25 +60,58 @@ export default function SetupScreen({ initialNames, onStart }: SetupScreenProps)
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 mb-8">
+        <div className="flex flex-col gap-4 mb-8">
           {Array.from({ length: count }, (_, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <span
-                className={`w-8 h-8 rounded-full ${PLAYER_CONFIGS[i].color} flex items-center justify-center text-white font-bold text-sm shrink-0`}
-              >
-                {PLAYER_CONFIGS[i].emoji}
-              </span>
-              <input
-                type="text"
-                value={names[i]}
-                onChange={e => {
-                  const next = [...names]
-                  next[i] = e.target.value
-                  setNames(next)
-                }}
-                placeholder={DEFAULT_NAMES[i]}
-                className="flex-1 border-2 border-slate-200 rounded-xl px-3 py-2 font-body focus:outline-none focus:border-dino-purple text-slate-700"
-              />
+            <div key={i} className="bg-slate-50 rounded-2xl p-3">
+              <div className="flex items-center gap-3 mb-3">
+                <span
+                  className={`w-9 h-9 rounded-full ${COIN_OPTIONS.find(c => c.id === coins[i])?.color ?? 'bg-slate-300'} flex items-center justify-center text-lg shrink-0`}
+                >
+                  {COIN_OPTIONS.find(c => c.id === coins[i])?.emoji}
+                </span>
+                <input
+                  type="text"
+                  value={names[i]}
+                  onChange={e => {
+                    const next = [...names]
+                    next[i] = e.target.value
+                    setNames(next)
+                  }}
+                  placeholder={DEFAULT_NAMES[i]}
+                  className="flex-1 border-2 border-slate-200 rounded-xl px-3 py-2 font-body focus:outline-none focus:border-dino-purple text-slate-700 bg-white"
+                />
+              </div>
+              <div className="flex gap-2 justify-center">
+                {COIN_OPTIONS.map(coin => {
+                  const takenByOther = Array.from({ length: count }, (_, j) => j)
+                    .filter(j => j !== i)
+                    .some(j => coins[j] === coin.id)
+                  const selected = coins[i] === coin.id
+                  return (
+                    <button
+                      key={coin.id}
+                      onClick={() => {
+                        if (takenByOther) return
+                        const next = [...coins]
+                        next[i] = coin.id
+                        setCoins(next)
+                      }}
+                      disabled={takenByOther}
+                      title={coin.label}
+                      className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl border-2 transition-all ${
+                        selected
+                          ? `${coin.color} border-transparent shadow-md scale-105`
+                          : takenByOther
+                          ? 'bg-slate-100 border-slate-100 opacity-30 cursor-not-allowed'
+                          : 'bg-white border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      <span className="text-xl">{coin.emoji}</span>
+                      <span className="text-[10px] font-body text-slate-600 leading-none">{coin.label}</span>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
           ))}
         </div>

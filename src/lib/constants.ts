@@ -27,4 +27,11 @@ export const PLAYER_CONFIGS = [
   { color: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🌈', label: 'Orange' },
 ]
 
+export const COIN_OPTIONS = [
+  { id: 'elsa',      label: 'Elsa',       emoji: '❄️', color: 'bg-blue-300',   ring: 'ring-blue-400'   },
+  { id: 'snowwhite', label: 'Snow White', emoji: '🍎', color: 'bg-red-300',    ring: 'ring-red-400'    },
+  { id: 'moana',     label: 'Moana',      emoji: '🌊', color: 'bg-teal-400',   ring: 'ring-teal-500'   },
+  { id: 'rapunzel',  label: 'Rapunzel',   emoji: '🌸', color: 'bg-purple-300', ring: 'ring-purple-400' },
+]
+
 export const DEFAULT_NAMES = ['Krysha', 'Daddy', 'Player 3', 'Player 4']
