@@ -7,12 +7,13 @@ import type { GameState } from '@/lib/types'
 
 interface GameScreenProps {
   state: GameState
+  specialSquare: number | null
   onRoll: () => void
   onRollComplete: (value: number) => void
   onNewGame: () => void
 }
 
-export default function GameScreen({ state, onRoll, onRollComplete, onNewGame }: GameScreenProps) {
+export default function GameScreen({ state, specialSquare, onRoll, onRollComplete, onNewGame }: GameScreenProps) {
   const currentPlayer = state.players[state.currentPlayerIndex]
 
   return (
@@ -22,6 +23,7 @@ export default function GameScreen({ state, onRoll, onRollComplete, onNewGame }:
         <GameBoard
           players={state.players}
           currentPlayerIndex={state.currentPlayerIndex}
+          specialSquare={specialSquare}
         />
       </div>
 

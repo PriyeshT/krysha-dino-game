@@ -5,9 +5,10 @@ interface BoardCellProps {
   square: number
   players: Player[]
   isCurrentPlayerCell: boolean
+  isSpecialSquare: boolean
 }
 
-export default function BoardCell({ square, players, isCurrentPlayerCell }: BoardCellProps) {
+export default function BoardCell({ square, players, isCurrentPlayerCell, isSpecialSquare }: BoardCellProps) {
   const isDinoStart = DINOSAURS.some(d => d.from === square)
   const isStairStart = STAIRCASES.some(s => s.from === square)
 
@@ -19,6 +20,7 @@ export default function BoardCell({ square, players, isCurrentPlayerCell }: Boar
     <div
       className={`relative flex flex-col justify-between border border-slate-200 ${bgClass} overflow-hidden
         ${isCurrentPlayerCell ? 'ring-2 ring-yellow-400 ring-inset z-10' : ''}
+        ${isSpecialSquare ? 'ring-4 ring-inset z-20 ' + (isDinoStart ? 'ring-red-500 animate-pulse' : 'ring-purple-500 animate-pulse') : ''}
       `}
     >
       {/* Square number */}
@@ -26,7 +28,7 @@ export default function BoardCell({ square, players, isCurrentPlayerCell }: Boar
         {square}
       </span>
 
-      {/* Player tokens — emoji, centred, as large as the cell allows */}
+      {/* Player tokens */}
       {players.length > 0 && (
         <div className="absolute inset-0 flex items-center justify-center flex-wrap gap-px p-px">
           {players.map(p => (

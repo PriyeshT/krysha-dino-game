@@ -138,9 +138,10 @@ function SnakePath({ from, to }: { from: number; to: number }) {
 
 const BOARD = buildBoard()
 
-export default function GameBoard({ players, currentPlayerIndex }: {
+export default function GameBoard({ players, currentPlayerIndex, specialSquare }: {
   players: Player[]
   currentPlayerIndex: number
+  specialSquare: number | null
 }) {
   const currentPlayer = players[currentPlayerIndex]
 
@@ -158,6 +159,7 @@ export default function GameBoard({ players, currentPlayerIndex }: {
                 square={square}
                 players={playersOnCell}
                 isCurrentPlayerCell={isCurrentPlayerCell}
+                isSpecialSquare={square === specialSquare}
               />
             )
           })
